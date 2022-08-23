@@ -7,7 +7,7 @@ public class NoteTest
         Assert.Equal(expectedLy, Presto.ToLyNotes(prestoNotes));
         if (GENERATE_PDFS)
         {
-            Presto.Main(new string[]{prestoNotes, testName});
+            Presto.Main(new string[] { prestoNotes, testName });
         }
     }
     [Fact]

@@ -33,20 +33,7 @@ public class Presto
                     break;
                 case '-':
                     result = result.Remove(result.Length - 1);
-                    if (notes.ElementAtOrDefault(i + 2) == '-')
-                    {
-                        if (notes.ElementAtOrDefault(i + 4) == '-')
-                        {
-                            result += NoteLengths[2];
-                            i += 4;
-                        }
-                        else
-                        {
-                            result += NoteLengths[1];
-                            i += 2;
-                        }
-                    }
-                    else result += NoteLengths[0];
+                    ParseDashes(ref i);
                     break;
                 default:
                     result += notes[i];
@@ -54,8 +41,25 @@ public class Presto
             }
         }
         return result;
+
+        void ParseDashes(ref int i)
+        {
+            int x = 0;
+            SearchForDashes(ref i, ref x);
+            result += NoteLengths[x - 1];
+            i += 2 * (x - 1);
+
+            void SearchForDashes(ref int i, ref int x)
+            {
+                if (notes.ElementAtOrDefault(i + 2 * x) == '-')
+                {
+                    x++;
+                    SearchForDashes(ref i, ref x);
+                }
+            }
+        }
     }
-    private static string[] NoteLengths = new string[]{"2", "2.", "1"};
+    private static string[] NoteLengths = new string[] { "2", "2.", "1" };
 
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
