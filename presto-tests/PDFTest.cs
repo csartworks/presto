@@ -8,7 +8,7 @@ public class PDFTest
 
     protected string GetPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
     [Fact]
-    public void PDFCreationTest()
+    private void PDFCreationTest()
     {
         File.Delete(_testPdfName);
         Assert.False(File.Exists(_testPdfName));
@@ -16,7 +16,7 @@ public class PDFTest
         Assert.True(File.Exists(_testPdfName));
     }
     [Fact]
-    public void PDFEquality()
+    private void PDFEquality()
     {
         RawPDF pdf1 = RawPDF.Get(GetPath("only-c.pdf"));
         RawPDF pdf2 = RawPDF.Get(GetPath("only-c-same-content.pdf"));

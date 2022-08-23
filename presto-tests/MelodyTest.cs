@@ -13,4 +13,10 @@ public class MelodyTest : PDFTest
         Presto.ToPDF("E e f g", TEST_FILE_TITLE);
         PDFAssert.PDFEqual(_testPdfName, GetPath("simple-melody-2.pdf"));
     }
+    [Fact]
+    public void DrawingBarTest()
+    {
+        Presto.ToPDF("E e f g | g f e d |", TEST_FILE_TITLE);
+        PDFAssert.PDFEqual(_testPdfName, GetPath("test4-drawing-bars.pdf"));
+    }
 }

@@ -6,20 +6,30 @@ public class Presto
     {
         ToPDF("E e f g");
     }
-    public static void ToPDF(string value, string title = "untitled")
+    public static void ToPDF(string notes, string title = "untitled")
     {
         string lyFileName = title + ".ly";
         using (StreamWriter streamWriter = File.CreateText(lyFileName))
         {
-            string content = @"\version ""2.22.2"" \relative";
-            if (char.IsUpper(value[0]))
+            string lyNotes = string.Empty;
+            if (char.IsUpper((char)notes[0]))
             {
-                value = value.Insert(1, "'");
-                value = value.ToLower();
+                notes = notes.Insert(1, "'");
+                notes = notes.ToLower();
             }
-            value = value.Insert(1, "'");
-            string notes = $"{{{value}}}";
-            streamWriter.WriteLine(content + notes);
+            notes = notes.Insert(1, "'");
+
+            foreach (char note in notes)
+            {
+                if (note == '|')
+                {
+                    lyNotes += @"\bar""|""";
+                    continue;
+                }
+                lyNotes += note;
+            }
+            string head = @"\version ""2.22.2"" \relative";
+            streamWriter.WriteLine($"{head}{{{notes}}}");
         }
 
         Process lilypond = new Process();
