@@ -6,43 +6,62 @@ public class Presto
     {
         ToPDF(args[0], args[1]);
     }
-    public static void ToPDF(string notes, string title = "untitled")
+    public static void ToPDF(string prestoScore, string title = "untitled")
     {
         string lyFileName = title + ".ly";
         using (StreamWriter streamWriter = File.CreateText(lyFileName))
         {
-            string lyNotes = string.Empty;
-            if (char.IsUpper((char)notes[0]))
+            string lyScore = string.Empty;
+            if (char.IsUpper((char)prestoScore[0]))
             {
-                notes = notes.Insert(1, "'");
-                notes = notes.ToLower();
+                prestoScore = prestoScore.Insert(1, "'");
+                prestoScore = prestoScore.ToLower();
             }
-            notes = notes.Insert(1, "'");
+            prestoScore = prestoScore.Insert(1, "'");
 
-            foreach (char note in notes)
+            foreach (char note in prestoScore)
             {
-                if (note == '|') lyNotes += @"\bar""|""";
-                else if (note == ',') lyNotes += "r";
-                else if (note == '-')
-                {
-                    lyNotes.Remove(lyNotes.Length - 1);
-                    lyNotes += "2";
-                }
-                else lyNotes += note;
+                ParseNote(note, ref lyScore);
             }
             string head = @"\version ""2.22.2"" \relative";
-            streamWriter.WriteLine($"{head}{{{lyNotes}}}");
+            streamWriter.WriteLine($"{head}{{{lyScore}}}");
         }
+        ConvertLyToPDF(lyFileName);
 
+    }
+    private static void ParseNote(char note, ref string score)
+    {
+        switch (note)
+        {
+            case '|':
+                score += @"\bar""|""";
+                break;
+            case ',':
+                score += "r";
+                break;
+            case '-':
+                score.Remove(score.Length - 1);
+                score += "2";
+                break;
+            default:
+                score += note;
+                break;
+
+        }
+        
+    }
+    public static void ConvertLyToPDF(string filename)
+    {
         Process lilypond = new Process();
         lilypond.StartInfo.FileName = "lilypond";
-        lilypond.StartInfo.Arguments = lyFileName;
+        lilypond.StartInfo.Arguments = filename;
         lilypond.Start();
         lilypond.WaitForExit();
         Console.WriteLine(lilypond.ExitCode);
-        if(lilypond.ExitCode != 1)
+        if (lilypond.ExitCode != 0)
         {
             throw new Exception($"Lilypond threw an error. Exit code : {lilypond.ExitCode}");
         }
+
     }
 }

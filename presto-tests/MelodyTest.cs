@@ -2,6 +2,11 @@ namespace presto_tests;
 public class MelodyTest : PDFTest
 {
     [Fact]
+    public void InvalidSyntaxThrowsError()
+    {
+        Assert.Throws<Exception>(() => Presto.ToPDF("facodjofp", _testPdfName));
+    }
+    [Fact]
     public void SimpleMelodyTest()
     {
         TestConvert("e e f g", "simple-melody.pdf");
