@@ -1,3 +1,4 @@
+namespace rawpdflib;
 public struct RawPDF
 {
     private const string RDF_MARK = "<rdf";

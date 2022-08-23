@@ -1,4 +1,5 @@
 using presto;
+using rawpdflib;
 namespace presto_tests;
 
 public class PDFTest
@@ -38,15 +39,5 @@ public class PDFTest
     {
         Presto.ToPDF("e e f g", TEST_FILE_TITLE);
         PDFAssert.PDFEqual(_testPdfName, GetTestPDFPath("simple-melody.pdf"));
-    }
-}
-
-public static class PDFAssert
-{
-    public static void PDFEqual(string pathToActual, string pathToExpected)
-    {
-        RawPDF actual = RawPDF.GetRaw(pathToActual);
-        RawPDF expected = RawPDF.GetRaw(pathToExpected);
-        Assert.Equal(actual, expected);
     }
 }
