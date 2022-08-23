@@ -1,1 +1,1 @@
-\version "2.22.2" \relative{e'' e f g}
+\version "2.22.2" \relative{c' d e f}

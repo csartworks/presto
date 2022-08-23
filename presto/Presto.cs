@@ -4,7 +4,7 @@ public class Presto
 {
     public static void Main(string[] args)
     {
-        ToPDF("E e f g");
+        ToPDF(args[0], args[1]);
     }
     public static void ToPDF(string notes, string title = "untitled")
     {
@@ -39,5 +39,6 @@ public class Presto
         lilypond.StartInfo.Arguments = lyFileName;
         lilypond.Start();
         lilypond.WaitForExit();
+        Console.WriteLine(lilypond.ExitCode);
     }
 }
