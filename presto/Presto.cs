@@ -40,5 +40,9 @@ public class Presto
         lilypond.Start();
         lilypond.WaitForExit();
         Console.WriteLine(lilypond.ExitCode);
+        if(lilypond.ExitCode != 1)
+        {
+            throw new Exception($"Lilypond threw an error. Exit code : {lilypond.ExitCode}");
+        }
     }
 }
