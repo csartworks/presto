@@ -1,17 +1,13 @@
 public class PDFUtils
 {
-    public static int GetRdfIndex(string pathToPdf)
-    {
-        var file = File.ReadAllText(pathToPdf);
-        return file.IndexOf("<rdf");
-    }
-
+    private const string RDF_MARK = "<rdf";
+    public static int GetRdfIndex(string rawPDF) => rawPDF.IndexOf(RDF_MARK);
     public static bool AreEqual(string filePath1, string filePath2)
     {
-        var file1 = File.ReadAllText(filePath1);
-        var file2 = File.ReadAllText(filePath2);
-        int file1RdfIndex = GetRdfIndex(filePath1);
-        int file2RdfIndex = GetRdfIndex(filePath2);
-        return file1[..file1RdfIndex] == file2[..file2RdfIndex];
+        var rawPDF1 = File.ReadAllText(filePath1);
+        var rawPDF2 = File.ReadAllText(filePath2);
+        int file1RdfIndex = GetRdfIndex(rawPDF1);
+        int file2RdfIndex = GetRdfIndex(rawPDF2);
+        return rawPDF1[..file1RdfIndex] == rawPDF2[..file2RdfIndex];
     }
 }
