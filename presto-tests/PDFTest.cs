@@ -26,7 +26,7 @@ public class PDFTest
         equals = PDFUtils.AreEqual(GetExpectedPDFPath("only-c.pdf"), GetExpectedPDFPath("only-c-identical.pdf"));
         Assert.True(equals);
 
-        equals = PDFUtils.AreEqual(GetExpectedPDFPath("only-c.pdf"), GetExpectedPDFPath("eq-1.pdf"));
+        equals = PDFUtils.AreEqual(GetExpectedPDFPath("only-c.pdf"), GetExpectedPDFPath("eq-test.pdf"));
         Assert.False(equals);
     }
     [Fact]
@@ -35,7 +35,7 @@ public class PDFTest
         int index = PDFUtils.GetRdfIndex(GetExpectedPDFPath("only-c.pdf"));
         Assert.Equal(23268, index);
 
-        index = PDFUtils.GetRdfIndex(GetExpectedPDFPath("eq-1.pdf"));
+        index = PDFUtils.GetRdfIndex(GetExpectedPDFPath("eq-test.pdf"));
         Assert.Equal(23799, index);
     }
 }
