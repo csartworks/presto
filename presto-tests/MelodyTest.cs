@@ -18,5 +18,18 @@ public class MelodyTest : PDFTest
     {
         Presto.ToPDF("E e f g | g f e d |", TEST_FILE_TITLE);
         PDFAssert.PDFEqual(_testPdfName, GetPath("test4-drawing-bars.pdf"));
+        Presto.ToPDF("E e | f g | g f e d |", TEST_FILE_TITLE);
+        PDFAssert.PDFEqual(_testPdfName, GetPath("test4-bartest-2.pdf"));
+    }
+    [Fact]
+    public void RestsTest()
+    {
+        Shortcut("e d d ,", "test5-rests.pdf");
+    }
+
+    private void Shortcut(string input, string resultPDFName)
+    {
+        Presto.ToPDF(input, TEST_FILE_TITLE);
+        PDFAssert.PDFEqual(_testPdfName, GetPath(resultPDFName));
     }
 }

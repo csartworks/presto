@@ -21,15 +21,12 @@ public class Presto
 
             foreach (char note in notes)
             {
-                if (note == '|')
-                {
-                    lyNotes += @"\bar""|""";
-                    continue;
-                }
-                lyNotes += note;
+                if (note == '|') lyNotes += @"\bar""|""";
+                else if (note == ',') lyNotes += "r";
+                else lyNotes += note;
             }
             string head = @"\version ""2.22.2"" \relative";
-            streamWriter.WriteLine($"{head}{{{notes}}}");
+            streamWriter.WriteLine($"{head}{{{lyNotes}}}");
         }
 
         Process lilypond = new Process();
