@@ -4,8 +4,8 @@ namespace presto_tests;
 public class PDFTest
 {
     private const string EXPECTED_PDFS_PATH = @"..\..\..\expected-pdfs\";
-    private const string TEST_FILE_NAME = "testbydeveopler";
-    private string _testPdfName = TEST_FILE_NAME + ".pdf";
+    private const string TEST_FILE_TITLE = "testbydeveopler";
+    private string _testPdfName = TEST_FILE_TITLE + ".pdf";
 
     private string GetTestPDFPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
     [Fact]
@@ -13,7 +13,7 @@ public class PDFTest
     {
         File.Delete(_testPdfName);
         Assert.False(File.Exists(_testPdfName));
-        Presto.ToPDF("c", TEST_FILE_NAME);
+        Presto.ToPDF("c", TEST_FILE_TITLE);
         Assert.True(File.Exists(_testPdfName));
     }
     [Fact]
@@ -36,10 +36,17 @@ public class PDFTest
     [Fact]
     public void SimpleMelodyTest()
     {
-        Presto.ToPDF("e e f g", TEST_FILE_NAME);
-        RawPDF actual = RawPDF.GetRaw(_testPdfName);
-        RawPDF expected = RawPDF.GetRaw(GetTestPDFPath("simple-melody.pdf"));
-        // Assert.Equal(actual, expected);
-        Assert.True(actual.Equals(expected));
+        Presto.ToPDF("e e f g", TEST_FILE_TITLE);
+        PDFAssert.PDFEqual(_testPdfName, GetTestPDFPath("simple-melody.pdf"));
+    }
+}
+
+public static class PDFAssert
+{
+    public static void PDFEqual(string pathToActual, string pathToExpected)
+    {
+        RawPDF actual = RawPDF.GetRaw(pathToActual);
+        RawPDF expected = RawPDF.GetRaw(pathToExpected);
+        Assert.Equal(actual, expected);
     }
 }
