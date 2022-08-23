@@ -17,26 +17,20 @@ public class PDFTest
         Assert.True(File.Exists(_testPdfName));
     }
     [Fact]
-    public void TestPDFEquality()
-    {
-        bool equals = PDFUtils.AreEqual(GetTestPDFPath("only-c.pdf"), GetTestPDFPath("only-c-same-content.pdf"));
-        Assert.True(equals);
-
-        equals = PDFUtils.AreEqual(GetTestPDFPath("only-c.pdf"), GetTestPDFPath("only-c-identical.pdf"));
-        Assert.True(equals);
-
-        equals = PDFUtils.AreEqual(GetTestPDFPath("only-c.pdf"), GetTestPDFPath("eq-test.pdf"));
-        Assert.False(equals);
-    }
-    [Fact]
     public void GetRdfIndexTest()
     {
-        string rawPDF = File.ReadAllText(GetTestPDFPath("only-c.pdf"));
-        int index = PDFUtils.GetRdfIndex(rawPDF);
-        Assert.Equal(23268, index);
-
-        rawPDF = File.ReadAllText(GetTestPDFPath("eq-test.pdf"));
-        index = PDFUtils.GetRdfIndex(rawPDF);
-        Assert.Equal(23799, index);
+        RawPDF rawPDF = RawPDF.GetRaw(GetTestPDFPath("only-c.pdf"));
+        Assert.Equal(23268, rawPDF.RdfIndex);
+        rawPDF = RawPDF.GetRaw(GetTestPDFPath("eq-test.pdf"));
+        Assert.Equal(23799, rawPDF.RdfIndex);
+    }
+    [Fact]
+    public void PDFEqualityTest()
+    {
+        RawPDF onlyC = RawPDF.GetRaw(GetTestPDFPath("only-c.pdf"));
+        RawPDF onlyCSame = RawPDF.GetRaw(GetTestPDFPath("only-c-same-content.pdf"));
+        RawPDF eqTest = RawPDF.GetRaw(GetTestPDFPath("eq-test.pdf"));
+        Assert.NotEqual(onlyC, eqTest);
+        Assert.Equal(onlyC, onlyCSame);
     }
 }
