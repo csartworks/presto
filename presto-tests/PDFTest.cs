@@ -33,4 +33,13 @@ public class PDFTest
         Assert.NotEqual(onlyC, eqTest);
         Assert.Equal(onlyC, onlyCSame);
     }
+    [Fact]
+    public void SimpleMelodyTest()
+    {
+        Presto.ToPDF("e e f g", TEST_FILE_NAME);
+        RawPDF actual = RawPDF.GetRaw(_testPdfName);
+        RawPDF expected = RawPDF.GetRaw(GetTestPDFPath("simple-melody.pdf"));
+        // Assert.Equal(actual, expected);
+        Assert.True(actual.Equals(expected));
+    }
 }
