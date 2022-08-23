@@ -24,4 +24,9 @@ public class PDFTest
         Assert.Equal(pdf1, pdf2);
         Assert.NotEqual(pdf1, pdf3);
     }
+    protected void Test(string input, string resultPDFName)
+    {
+        Presto.ToPDF(input, TEST_FILE_TITLE);
+        PDFAssert.PDFEqual(_testPdfName, GetPath(resultPDFName));
+    }
 }
