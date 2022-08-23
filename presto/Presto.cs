@@ -9,23 +9,20 @@ public class Presto
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
         string lyFileName = title + ".ly";
-        using (StreamWriter streamWriter = File.CreateText(lyFileName))
-        {
-            string lyScore = string.Empty;
-            if (char.IsUpper((char)prestoScore[0]))
-            {
-                prestoScore = prestoScore.Insert(1, "'");
-                prestoScore = prestoScore.ToLower();
-            }
-            prestoScore = prestoScore.Insert(1, "'");
+        string lyScore = string.Empty;
 
-            foreach (char note in prestoScore)
-            {
-                ParseNote(note, ref lyScore);
-            }
-            string head = @"\version ""2.22.2"" \relative";
-            streamWriter.WriteLine($"{head}{{{lyScore}}}");
+        if (char.IsUpper((char)prestoScore[0]))
+        {
+            prestoScore = prestoScore.Insert(1, "'");
+            prestoScore = prestoScore.ToLower();
         }
+        prestoScore = prestoScore.Insert(1, "'");
+
+        foreach (char note in prestoScore) ParseNote(note, ref lyScore);
+
+        string head = @"\version ""2.22.2"" \relative";
+        using (StreamWriter streamWriter = File.CreateText(lyFileName))
+            streamWriter.WriteLine($"{head}{{{lyScore}}}");
         ConvertLyToPDF(lyFileName);
     }
     private static void ParseNote(char note, ref string score)
