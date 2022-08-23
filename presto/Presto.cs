@@ -71,25 +71,6 @@ public class Presto
             streamWriter.WriteLine($"{head}{{{lyScore}}}");
         ConvertLyToPDF(lyFileName);
     }
-    private static void ParseNote(char note, ref string score)
-    {
-        switch (note)
-        {
-            case '|':
-                score += @"\bar""|""";
-                break;
-            case ',':
-                score += "r";
-                break;
-            case '-':
-                score = score.Remove(score.Length - 1);
-                score += "2";
-                break;
-            default:
-                score += note;
-                break;
-        }
-    }
     private const string HORIZONTAL_BAR = "!!!!!!!!!!!!!!!!!!!!!!";
     private static void ConvertLyToPDF(string filename)
     {
