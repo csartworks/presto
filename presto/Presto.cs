@@ -27,7 +27,6 @@ public class Presto
             streamWriter.WriteLine($"{head}{{{lyScore}}}");
         }
         ConvertLyToPDF(lyFileName);
-
     }
     private static void ParseNote(char note, ref string score)
     {
@@ -46,11 +45,9 @@ public class Presto
             default:
                 score += note;
                 break;
-
         }
-        
     }
-    public static void ConvertLyToPDF(string filename)
+    private static void ConvertLyToPDF(string filename)
     {
         Process lilypond = new Process();
         lilypond.StartInfo.FileName = "lilypond";
@@ -62,6 +59,5 @@ public class Presto
         {
             throw new Exception($"Lilypond threw an error. Exit code : {lilypond.ExitCode}");
         }
-
     }
 }
