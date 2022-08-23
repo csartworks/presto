@@ -4,7 +4,7 @@ public class Presto
 {
     public static void Main(string[] args)
     {
-        ToPDF(args[0], args[1]);
+        ToPDF(args[0]);
     }
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
@@ -56,11 +56,11 @@ public class Presto
         };
         lilypond.Start();
         lilypond.WaitForExit();
-        Console.WriteLine(lilypond.ExitCode);
         if (lilypond.ExitCode != 0)
         {
             string errorMessage = lilypond.StandardError.ReadToEnd();
             throw new Exception($"Lilypond threw an error.\n{HORIZONTAL_BAR}\n{errorMessage}Exit code : {lilypond.ExitCode}\n{HORIZONTAL_BAR}");
         }
+        else Console.WriteLine("Conversion was successful");
     }
 }
