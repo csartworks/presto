@@ -36,7 +36,8 @@ public class NoteTest
     public void NoteRhythmTest()
     {
         Test("e'2 d2", "e - d -", "test_6_half_note");
-        Test("e'2. d", "e - - d", "test_8_dotted_half_note");
         Test(@"e'1 \bar""|"" d1", "e - - - | d - - -", "test_7_whole_note");
+        Test("e'2.", "e - -", "test_8_dotted_half_note");
+        // Test("e'2. d", "ee fg gf ed", "test_9_8th_note");
     }
 }

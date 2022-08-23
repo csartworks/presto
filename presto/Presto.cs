@@ -64,16 +64,7 @@ public class Presto
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
         string lyFileName = title + ".ly";
-        string lyScore = string.Empty;
-
-        if (char.IsUpper((char)prestoScore[0]))
-        {
-            prestoScore = prestoScore.Insert(1, "'");
-            prestoScore = prestoScore.ToLower();
-        }
-        prestoScore = prestoScore.Insert(1, "'");
-
-        foreach (char note in prestoScore) ParseNote(note, ref lyScore);
+        string lyScore = ToLyNotes(prestoScore);
 
         string head = @"\version ""2.20.0"" \relative";
         using (StreamWriter streamWriter = File.CreateText(lyFileName))
