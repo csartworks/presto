@@ -4,7 +4,7 @@ public class NoteTest
     private bool GENERATE_PDFS = false;
     private void Test(string expectedLy, string prestoNotes, string testName)
     {
-        Assert.Equal(expectedLy, Presto.ToLyNotes(prestoNotes));
+        Assert.Equal(expectedLy, Parser.ToLyNotes(prestoNotes));
         if (GENERATE_PDFS)
         {
             Presto.Main(new string[] { prestoNotes, testName });
@@ -38,6 +38,6 @@ public class NoteTest
         Test("e'2 d2", "e - d -", "test_6_half_note");
         Test(@"e'1 \bar""|"" d1", "e - - - | d - - -", "test_7_whole_note");
         Test("e'2.", "e - -", "test_8_dotted_half_note");
-        // Test("e'2. d", "ee fg gf ed", "test_9_8th_note");
+        // Test("e8 e f g", "ee fg", "test_9_8th_note");
     }
 }
