@@ -7,8 +7,6 @@ public class Presto
         if (args.Length == 2) ToPDF(args[0], args[1]);
         else if (args.Length == 1) ToPDF(args[0]);
     }
-
-
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
         string lyFileName = title + ".ly";
