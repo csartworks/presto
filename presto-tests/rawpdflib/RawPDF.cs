@@ -6,14 +6,14 @@ public struct RawPDF
     public string Raw { get; init; }
     public string RdflessRaw { get; init; }
     public int RdfIndex { get; init; }
-    public int URIIndex { get; init; }
+    public int URILastIndex { get; init; }
 
     public RawPDF(string raw)
     {
         Raw = raw;
         RdfIndex = raw.IndexOf(RDF_MARK);
-        URIIndex = raw.LastIndexOf(URI_MARK);
-        RdflessRaw = Raw[URIIndex..RdfIndex];
+        URILastIndex = raw.LastIndexOf(URI_MARK);
+        RdflessRaw = Raw[URILastIndex..RdfIndex];
     }
     public static RawPDF GetRaw(string pathToPDF) => new RawPDF(File.ReadAllText(pathToPDF));
 

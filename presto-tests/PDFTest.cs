@@ -4,11 +4,11 @@ namespace presto_tests;
 
 public class PDFTest
 {
-    private const string EXPECTED_PDFS_PATH = @"..\..\..\expected-pdfs\";
-    private const string TEST_FILE_TITLE = "testbydeveopler";
-    private string _testPdfName = TEST_FILE_TITLE + ".pdf";
+    protected const string EXPECTED_PDFS_PATH = @"..\..\..\expected-pdfs\";
+    protected const string TEST_FILE_TITLE = "testbydeveopler";
+    protected string _testPdfName = TEST_FILE_TITLE + ".pdf";
 
-    private string GetTestPDFPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
+    protected string GetTestPDFPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
     [Fact]
     public void PDFCreationTest()
     {
@@ -35,9 +35,23 @@ public class PDFTest
         Assert.Equal(onlyC, onlyCSame);
     }
     [Fact]
-    public void SimpleMelodyTest()
+    public void CheckPdfLines()
     {
-        Presto.ToPDF("e e f g", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetTestPDFPath("simple-melody.pdf"));
+        Assert.Equal(GetFilteredRaw(GetTestPDFPath("only-c.pdf")), GetFilteredRaw(GetTestPDFPath("only-c-same-content.pdf")));
+
     }
+    public string[] GetFilteredRaw(string path)
+    {
+        string[] lines = File.ReadAllLines(path);
+        List<string> filteredLines = new List<string>();
+        foreach (string line in lines)
+        {
+            if (line.StartsWith(RDF_MARK)) break;
+            if (line.StartsWith(URI_MARK)) continue;
+            filteredLines.Add(line);
+        }
+        return filteredLines.ToArray();
+    }
+    private const string RDF_MARK = "<rdf";
+    private const string URI_MARK = "/URI";
 }

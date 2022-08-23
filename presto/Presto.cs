@@ -4,7 +4,7 @@ public class Presto
 {
     public static void Main(string[] args)
     {
-        ToPDF("e e f g");
+        ToPDF("E e f g");
     }
     public static void ToPDF(string value, string title = "untitled")
     {
@@ -12,6 +12,11 @@ public class Presto
         using (StreamWriter streamWriter = File.CreateText(lyFileName))
         {
             string content = @"\version ""2.22.2"" \relative";
+            if (char.IsUpper(value[0]))
+            {
+                value = value.Insert(1, "'");
+                value = value.ToLower();
+            }
             value = value.Insert(1, "'");
             string notes = $"{{{value}}}";
             streamWriter.WriteLine(content + notes);
