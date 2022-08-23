@@ -20,7 +20,7 @@ public class Presto
 
         foreach (char note in prestoScore) ParseNote(note, ref lyScore);
 
-        string head = @"\version ""2.22.0"" \relative";
+        string head = @"\version ""2.20.0"" \relative";
         using (StreamWriter streamWriter = File.CreateText(lyFileName))
             streamWriter.WriteLine($"{head}{{{lyScore}}}");
         ConvertLyToPDF(lyFileName);
