@@ -35,10 +35,18 @@ public class Presto
                     result = result.Remove(result.Length - 1);
                     if (notes.ElementAtOrDefault(i + 2) == '-')
                     {
-                        result += "2.";
-                        i += 2;
+                        if (notes.ElementAtOrDefault(i + 4) == '-')
+                        {
+                            result += NoteLengths[2];
+                            i += 4;
+                        }
+                        else
+                        {
+                            result += NoteLengths[1];
+                            i += 2;
+                        }
                     }
-                    else result += "2";
+                    else result += NoteLengths[0];
                     break;
                 default:
                     result += notes[i];
@@ -47,6 +55,7 @@ public class Presto
         }
         return result;
     }
+    private static string[] NoteLengths = new string[]{"2", "2.", "1"};
 
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
