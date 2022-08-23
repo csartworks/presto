@@ -24,4 +24,4 @@ jobs:
     - name: Build
       run: dotnet build presto-tests/ --no-restore
     - name: Test
-      run: presto-tests/testrunner.sh
+      run: presto-tests/ghtest.sh
