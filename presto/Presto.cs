@@ -23,6 +23,11 @@ public class Presto
             {
                 if (note == '|') lyNotes += @"\bar""|""";
                 else if (note == ',') lyNotes += "r";
+                else if (note == '-')
+                {
+                    lyNotes.Remove(lyNotes.Length - 1);
+                    lyNotes += "2";
+                }
                 else lyNotes += note;
             }
             string head = @"\version ""2.22.2"" \relative";

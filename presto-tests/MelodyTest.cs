@@ -4,30 +4,36 @@ public class MelodyTest : PDFTest
     [Fact]
     public void SimpleMelodyTest()
     {
-        Presto.ToPDF("e e f g", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetPath("simple-melody.pdf"));
+        TestConvert("e e f g", "simple-melody.pdf");
     }
     [Fact]
     public void MelodyThatStartsOctaveUp()
     {
-        Presto.ToPDF("E e f g", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetPath("simple-melody-2.pdf"));
+        TestConvert("E e f g", "simple-melody-2.pdf");
     }
     [Fact]
     public void DrawingBarTest()
     {
-        Presto.ToPDF("E e f g | g f e d |", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetPath("test4-drawing-bars.pdf"));
-        Presto.ToPDF("E e | f g | g f e d |", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetPath("test4-bartest-2.pdf"));
+        TestConvert("E e f g | g f e d |", "test4-drawing-bars.pdf");
+        TestConvert("E e | f g | g f e d |", "test4-bartest-2.pdf");
     }
     [Fact]
     public void RestsTest()
     {
-        Shortcut("e d d ,", "test5-rests.pdf");
+        TestConvert("e d d ,", "test5-rests.pdf");
     }
+    [Fact]
+    public void NoteLengthTest()
+    {
+        TestConvert("e - d -", "test6-half-notes.pdf");
+    }
+    // [Fact]
+    // public void WholeNotesTest()
+    // {
+    //     Shortcut("e - - - | d - - -", "test7-whole-notes.pdf");
+    // }
 
-    private void Shortcut(string input, string resultPDFName)
+    private void TestConvert(string input, string resultPDFName)
     {
         Presto.ToPDF(input, TEST_FILE_TITLE);
         PDFAssert.PDFEqual(_testPdfName, GetPath(resultPDFName));
