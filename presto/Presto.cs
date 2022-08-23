@@ -44,17 +44,23 @@ public class Presto
                 break;
         }
     }
+    private const string HORIZONTAL_BAR = "!!!!!!!!!!!!!!!!!!!!!!";
     private static void ConvertLyToPDF(string filename)
     {
         Process lilypond = new Process();
-        lilypond.StartInfo.FileName = "lilypond";
-        lilypond.StartInfo.Arguments = filename;
+        lilypond.StartInfo = new ProcessStartInfo
+        {
+            FileName = "lilypond",
+            Arguments = filename,
+            RedirectStandardError = true
+        };
         lilypond.Start();
         lilypond.WaitForExit();
         Console.WriteLine(lilypond.ExitCode);
         if (lilypond.ExitCode != 0)
         {
-            throw new Exception($"Lilypond threw an error. Exit code : {lilypond.ExitCode}");
+            string errorMessage = lilypond.StandardError.ReadToEnd();
+            throw new Exception($"Lilypond threw an error.\n{HORIZONTAL_BAR}\n{errorMessage}Exit code : {lilypond.ExitCode}\n{HORIZONTAL_BAR}");
         }
     }
 }

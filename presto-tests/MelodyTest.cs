@@ -32,9 +32,9 @@ public class MelodyTest : PDFTest
     {
         Test("e - d -", "test6-half-notes.pdf");
     }
-    // [Fact]
-    // public void WholeNotesTest()
-    // {
-    //     Test("e - - - | d - - -", "test7-whole-notes.pdf");
-    // }
+    [Fact]
+    public void WholeNotesTest()
+    {
+        Test("eieajfeopf - - - | d - - -", "test7-whole-notes.pdf");
+    }
 }
