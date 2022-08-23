@@ -1,5 +1,3 @@
-using presto;
-using rawpdflib;
 namespace presto_tests;
 
 public class PDFTest
@@ -8,7 +6,7 @@ public class PDFTest
     protected const string TEST_FILE_TITLE = "testbydeveopler";
     protected string _testPdfName = TEST_FILE_TITLE + ".pdf";
 
-    protected string GetTestPDFPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
+    protected string GetPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
     [Fact]
     public void PDFCreationTest()
     {
@@ -18,40 +16,12 @@ public class PDFTest
         Assert.True(File.Exists(_testPdfName));
     }
     [Fact]
-    public void GetRdfIndexTest()
+    public void PDFEquality()
     {
-        RawPDF rawPDF = RawPDF.GetRaw(GetTestPDFPath("only-c.pdf"));
-        Assert.Equal(23268, rawPDF.RdfIndex);
-        rawPDF = RawPDF.GetRaw(GetTestPDFPath("eq-test.pdf"));
-        Assert.Equal(23799, rawPDF.RdfIndex);
+        RawPDF pdf1 = RawPDF.Get(GetPath("only-c.pdf"));
+        RawPDF pdf2 = RawPDF.Get(GetPath("only-c-same-content.pdf"));
+        RawPDF pdf3 = RawPDF.Get(GetPath("eq-test.pdf"));
+        Assert.Equal(pdf1, pdf2);
+        Assert.NotEqual(pdf1, pdf3);
     }
-    [Fact]
-    public void PDFEqualityTest()
-    {
-        RawPDF onlyC = RawPDF.GetRaw(GetTestPDFPath("only-c.pdf"));
-        RawPDF onlyCSame = RawPDF.GetRaw(GetTestPDFPath("only-c-same-content.pdf"));
-        RawPDF eqTest = RawPDF.GetRaw(GetTestPDFPath("eq-test.pdf"));
-        Assert.NotEqual(onlyC, eqTest);
-        Assert.Equal(onlyC, onlyCSame);
-    }
-    [Fact]
-    public void CheckPdfLines()
-    {
-        Assert.Equal(GetFilteredRaw(GetTestPDFPath("only-c.pdf")), GetFilteredRaw(GetTestPDFPath("only-c-same-content.pdf")));
-
-    }
-    public string[] GetFilteredRaw(string path)
-    {
-        string[] lines = File.ReadAllLines(path);
-        List<string> filteredLines = new List<string>();
-        foreach (string line in lines)
-        {
-            if (line.StartsWith(RDF_MARK)) break;
-            if (line.StartsWith(URI_MARK)) continue;
-            filteredLines.Add(line);
-        }
-        return filteredLines.ToArray();
-    }
-    private const string RDF_MARK = "<rdf";
-    private const string URI_MARK = "/URI";
 }

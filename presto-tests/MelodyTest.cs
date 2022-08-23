@@ -5,13 +5,12 @@ public class MelodyTest : PDFTest
     public void SimpleMelodyTest()
     {
         Presto.ToPDF("e e f g", TEST_FILE_TITLE);
-        PDFAssert.PDFEqual(_testPdfName, GetTestPDFPath("simple-melody.pdf"));
+        PDFAssert.PDFEqual(_testPdfName, GetPath("simple-melody.pdf"));
     }
     [Fact]
     public void MelodyThatStartsOctaveUp()
     {
         Presto.ToPDF("E e f g", TEST_FILE_TITLE);
-        // PDFAssert.PDFEqual(_testPdfName, GetTestPDFPath("simple-melody-2.pdf"));
-        Assert.Equal(GetFilteredRaw(_testPdfName), GetFilteredRaw(GetTestPDFPath("simple-melody-2.pdf")));
+        PDFAssert.PDFEqual(_testPdfName, GetPath("simple-melody-2.pdf"));
     }
 }

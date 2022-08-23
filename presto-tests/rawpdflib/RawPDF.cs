@@ -1,30 +1,31 @@
 namespace rawpdflib;
-public struct RawPDF
+public class RawPDF
 {
     private const string RDF_MARK = "<rdf";
     private const string URI_MARK = "/URI";
-    public string Raw { get; init; }
-    public string RdflessRaw { get; init; }
-    public int RdfIndex { get; init; }
-    public int URILastIndex { get; init; }
-
-    public RawPDF(string raw)
+    public string[] RawLines { get; init; }
+    public string[] FilteredLines { get; init; }
+    public RawPDF(string[] rawLines)
     {
-        Raw = raw;
-        RdfIndex = raw.IndexOf(RDF_MARK);
-        URILastIndex = raw.LastIndexOf(URI_MARK);
-        RdflessRaw = Raw[URILastIndex..RdfIndex];
+        RawLines = rawLines;
+        List<string> filteredLines = new List<string>();
+        foreach (string line in rawLines)
+        {
+            if (line.StartsWith(RDF_MARK)) break;
+            if (line.StartsWith(URI_MARK)) continue;
+            filteredLines.Add(line);
+        }
+        FilteredLines = filteredLines.ToArray();
     }
-    public static RawPDF GetRaw(string pathToPDF) => new RawPDF(File.ReadAllText(pathToPDF));
-
-    public override string ToString()
+    public static RawPDF Get(string path)
     {
-        return Raw;
+        return new RawPDF(File.ReadAllLines(path));
     }
+
     public override bool Equals(object? obj)
     {
         if (obj is not RawPDF comparison) return false;
-        return this.RdflessRaw == comparison.RdflessRaw;
+        return Enumerable.SequenceEqual(this.FilteredLines, comparison.FilteredLines);
     }
     public override int GetHashCode()
     {
