@@ -3,10 +3,12 @@ namespace presto_tests;
 public class PDFTest
 {
     protected const string EXPECTED_PDFS_PATH = @"..\..\..\expected-pdfs\";
+    protected string ExpectedPDFsFolder = Path.Combine("..", "..", "..", "expected-pdfs");
+    protected string GetPath(string filename) => Path.Combine(ExpectedPDFsFolder, filename);
     protected const string TEST_FILE_TITLE = "testbydeveopler";
     protected string _testPdfName = TEST_FILE_TITLE + ".pdf";
 
-    protected string GetPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
+    // protected string GetPath(string fileName) => EXPECTED_PDFS_PATH + fileName;
     [Fact]
     private void PDFCreationTest()
     {
