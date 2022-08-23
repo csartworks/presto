@@ -4,8 +4,50 @@ public class Presto
 {
     public static void Main(string[] args)
     {
-        ToPDF(args[0]);
+        if (args.Length == 2) ToPDF(args[0], args[1]);
+        else if (args.Length == 1) ToPDF(args[0]);
     }
+
+    public static string ToLyNotes(string notes)
+    {
+        if (char.IsUpper((char)notes[0]))
+        {
+            notes = notes.Insert(1, "'");
+            notes = notes.ToLower();
+        }
+        notes = notes.Insert(1, "'");
+
+        string result = string.Empty;
+        foreach (char note in notes)
+        {
+        }
+        for (int i = 0; i < notes.Length; i++)
+        {
+            switch (notes[i])
+            {
+                case '|':
+                    result += @"\bar""|""";
+                    break;
+                case ',':
+                    result += "r";
+                    break;
+                case '-':
+                    result = result.Remove(result.Length - 1);
+                    if (notes.ElementAtOrDefault(i + 2) == '-')
+                    {
+                        result += "2.";
+                        i += 2;
+                    }
+                    else result += "2";
+                    break;
+                default:
+                    result += notes[i];
+                    break;
+            }
+        }
+        return result;
+    }
+
     public static void ToPDF(string prestoScore, string title = "untitled")
     {
         string lyFileName = title + ".ly";
@@ -36,7 +78,7 @@ public class Presto
                 score += "r";
                 break;
             case '-':
-                score.Remove(score.Length - 1);
+                score = score.Remove(score.Length - 1);
                 score += "2";
                 break;
             default:
