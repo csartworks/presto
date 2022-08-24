@@ -6,18 +6,12 @@ public static class Parser
     private static string s_result = string.Empty;
     private static string s_notes = string.Empty;
     private static int s_head = 0;
-    public static string ToLyNotes(string prestoNotes)
+    public static string ToLyNotes(in string prestoNotes)
     {
         s_head = 0;
         s_result = string.Empty;
         s_notes = prestoNotes;
 
-        if (char.IsUpper((char)s_notes[0]))
-        {
-            s_notes = s_notes.Insert(1, "'");
-            s_notes = s_notes.ToLower();
-        }
-        s_notes = s_notes.Insert(1, "'");
 
         for (s_head = 0; s_head < s_notes.Length; s_head++)
         {
@@ -38,14 +32,32 @@ public static class Parser
                     break;
             }
         }
+        if (char.IsUpper((char)s_notes[0]))
+        {
+            s_result = s_result.Insert(1, "'");
+        }
+        s_result = s_result.Insert(1, "'");
+        s_result = s_result.ToLower();
         return s_result;
 
         void Foo(int i)
         {
+            bool is8th = false;
+            if (IsNoteName(i) && IsNoteName(i + 1))
+            {
+                is8th = true;
+            }
 
             s_result += s_notes[i];
+            if (is8th)
+            {
+                s_result += '8';
+            }
         }
-
+    }
+    private static bool IsNoteName(int index)
+    {
+        return NOTE_NAMES.Contains(s_notes.ElementAtOrDefault(index));
     }
     private static void ParseDashes()
     {
