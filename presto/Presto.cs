@@ -34,6 +34,6 @@ public class Presto
             string errorMessage = lilypond.StandardError.ReadToEnd();
             throw new Exception($"Lilypond threw an error.\n{HORIZONTAL_BAR}\n{errorMessage}Exit code : {lilypond.ExitCode}\n{HORIZONTAL_BAR}");
         }
-        else Console.WriteLine("Conversion was successful");
+        else Console.Write("Conversion was successful");
     }
 }
