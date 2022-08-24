@@ -46,21 +46,12 @@ public static class Parser
 
         void Foo(int i)
         {
-            // bool is8th = false;
             int x = 0;
             SearchFoward(ref x, 1, NOTE_NAMES);
-            // if (IsNoteName(i) && IsNoteName(i + 1))
-            // {
-            //     is8th = true;
-            // }
 
             s_result += s_notes[i];
             s_result += ShortNoteLengths[x];
             if(x >= 2) s_result += " ";
-            // if (is8th)
-            // {
-            //     s_result += "8 ";
-            // }
         }
     }
     private static bool IsNoteName(int index)
