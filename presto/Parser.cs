@@ -2,6 +2,7 @@ namespace presto;
 public static class Parser
 {
     private static string[] NoteLengths = new string[] { "2", "2.", "1" };
+    private static string[] ShortNoteLengths = new string[] { "", "", "8", "16", "32" };
     private const string NOTE_NAMES = "abcdefg";
     private static string s_result = string.Empty;
     private static string s_notes = string.Empty;
@@ -27,6 +28,9 @@ public static class Parser
                     s_result = s_result.Remove(s_result.Length - 1);
                     ParseDashes();
                     break;
+                case ' ':
+                    s_result += ' ';
+                    break;
                 default:
                     Foo(s_head);
                     break;
@@ -42,17 +46,21 @@ public static class Parser
 
         void Foo(int i)
         {
-            bool is8th = false;
-            if (IsNoteName(i) && IsNoteName(i + 1))
-            {
-                is8th = true;
-            }
+            // bool is8th = false;
+            int x = 0;
+            SearchFoward(ref x, 1, NOTE_NAMES);
+            // if (IsNoteName(i) && IsNoteName(i + 1))
+            // {
+            //     is8th = true;
+            // }
 
             s_result += s_notes[i];
-            if (is8th)
-            {
-                s_result += "8 ";
-            }
+            s_result += ShortNoteLengths[x];
+            if(x >= 2) s_result += " ";
+            // if (is8th)
+            // {
+            //     s_result += "8 ";
+            // }
         }
     }
     private static bool IsNoteName(int index)
@@ -62,17 +70,25 @@ public static class Parser
     private static void ParseDashes()
     {
         int x = 0;
-        SearchForDashes(ref x);
+        SearchFoward(ref x, 2, '-');
         s_result += NoteLengths[x - 1];
         s_head += 2 * (x - 1);
-
     }
-    private static void SearchForDashes(ref int x)
+    private static void SearchFoward(ref int count, int step, char toSearch)
     {
-        if (s_notes.ElementAtOrDefault(s_head + 2 * x) == '-')
+        if (s_notes.ElementAtOrDefault(s_head + step * count) == toSearch)
         {
-            x++;
-            SearchForDashes(ref x);
+            count++;
+            SearchFoward(ref count, step, toSearch);
+        }
+    }
+    private static void SearchFoward(ref int count, int step, string searchIn)
+    {
+        int nextSearchIndex = s_head + step * count;
+        if (searchIn.Contains(s_notes.ElementAtOrDefault(nextSearchIndex)))
+        {
+            count++;
+            SearchFoward(ref count, step, searchIn);
         }
     }
 }

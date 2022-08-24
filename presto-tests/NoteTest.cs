@@ -39,5 +39,6 @@ public class NoteTest
         Test(@"e'1 \bar""|"" d1", "e - - - | d - - -", "test_7_whole_note");
         Test("e'2.", "e - -", "test_8_dotted_half_note");
         Test("e'8 e f8 g", "ee fg", "test_9_8th_note");
+        // Test("e'16 e f g", "eefg", "test_9_8th_note");
     }
 }
