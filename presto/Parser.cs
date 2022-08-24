@@ -51,7 +51,7 @@ public static class Parser
             s_result += s_notes[i];
             if (is8th)
             {
-                s_result += '8';
+                s_result += "8 ";
             }
         }
     }
