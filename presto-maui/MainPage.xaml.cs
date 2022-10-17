@@ -1,24 +1,42 @@
-﻿namespace presto_maui;
+﻿using presto;
+namespace presto_maui;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-
 	public MainPage()
 	{
-		InitializeComponent();
+        Image image = new Image
+        {
+            Source = ImageSource.FromFile(@"..\untitled3.png")
+                //Source = ImageSource.FromUri(new Uri("https://aka.ms/campus.jpg"))
+        };
+        Content = image;
+        //InitializeComponent();
 	}
+    private void OnEditorTextChanged(object sender, TextChangedEventArgs e)
+    {
+        string newVal = e.NewTextValue;
+    }
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void OnEditorComplete(object sender, EventArgs e)
 	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+        //string newVal = e.NewTextValue;
+        string newVal = ((Editor)sender).Text;
+        Presto.ToPng(newVal);
 	}
+    async void OnOpenScore(object sender, EventArgs e)
+    {
+        try
+        {
+            string filePath = Presto.pwd;
+            filePath = Path.Combine(filePath, Presto.title + ".pdf");
+            Uri uri = new Uri(filePath);
+            await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+        catch (Exception ex)
+        {
+            // An unexpected error occured. No browser may be installed on the device.
+        }
+    }
 }
 

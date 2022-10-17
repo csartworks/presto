@@ -78,16 +78,19 @@ public static class PrestoCLI
     private static void WriteScore(string text)
     {
         Console.Write(text);
+        CurrentFile.Write(text);
         score += text;
     }
 
     private static void Save()
     {
         WriteToStatusBar("Saving file...");
-        using (StreamWriter streamWriter = File.CreateText("untitled.presto"))
-        {
-            streamWriter.Write(score);
-        }
+        // using (StreamWriter streamWriter = File.CreateText("untitled.presto"))
+        // {
+        //     streamWriter.Write(score);
+        // }
+        CurrentFile.Close();
+        // CurrentFile = new StreamWriter(CurrentFileName);
         WriteToStatusBar("File saved.");
     }
     private static void Export()
@@ -97,19 +100,21 @@ public static class PrestoCLI
         presto.Presto.ToPDF(score);
         Restore();
     }
+    private static StreamWriter CurrentFile;
+    private static string CurrentFileName = "untitled.presto";
     private static void Open()
     {
         Status();
         Console.Write("Enter file name : ");
-        string filename = Console.ReadLine() ?? "";
-        string fileContent = File.ReadAllText(filename);
+        CurrentFileName = Console.ReadLine() ?? "";
+        string fileContent = File.ReadAllText(CurrentFileName);
         Console.Clear();
-        WriteToStatusBar($"Loading file... : {filename}");
+        WriteToStatusBar($"Loading file... : {CurrentFileName}");
         Console.Write(fileContent);
-        WriteToStatusBar("Loaded file : " + filename);
+        WriteToStatusBar("Loaded file : " + CurrentFileName);
         score = fileContent;
 
-
-
+        CurrentFile = new StreamWriter(CurrentFileName);
+        CurrentFile.Write(fileContent);
     }
 }
