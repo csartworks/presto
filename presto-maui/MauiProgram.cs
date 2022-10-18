@@ -16,6 +16,7 @@ public static class MauiProgram
 			});
 
 		ScoreDrawable.DeserializeGlyphNames();
+		//ScoreDrawable.DeserializeMetadata();
 		return builder.Build();
 	}
 }

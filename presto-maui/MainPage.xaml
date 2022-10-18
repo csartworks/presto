@@ -6,8 +6,8 @@
         <drawable:ScoreDrawable x:Key="score"/>
     </ContentPage.Resources>
 
-    <VerticalStackLayout HorizontalOptions="Start">
-        <GraphicsView Drawable="{StaticResource score}" HeightRequest="100" WidthRequest="100"/>
+    <VerticalStackLayout HorizontalOptions="Start" Margin="100,100,100,100">
+        <GraphicsView Drawable="{StaticResource score}" HeightRequest="500" WidthRequest="500"/>
     </VerticalStackLayout>
 
 </ContentPage>
