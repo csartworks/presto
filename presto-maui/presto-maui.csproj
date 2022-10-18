@@ -55,8 +55,8 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	</ItemGroup>
-	<ItemGroup>
+	<!-- <ItemGroup>
 		<ProjectReference Include="..\presto\presto.csproj" />
-	</ItemGroup>
+	</ItemGroup> -->
 
 </Project>
