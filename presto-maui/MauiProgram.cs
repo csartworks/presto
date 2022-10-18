@@ -15,6 +15,7 @@ public static class MauiProgram
 				fonts.AddFont("BravuraText.otf", "BravuraText");
 			});
 
+		ScoreDrawable.DeserializeGlyphNames();
 		return builder.Build();
 	}
 }

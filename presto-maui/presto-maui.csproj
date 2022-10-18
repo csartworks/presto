@@ -50,6 +50,11 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\Untitled.png" />
+	  <None Remove="Resources\Raw\glyphnames.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Resources\Raw\bravura_metadata.json" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:drawable="clr-namespace:presto_maui" x:Class="presto_maui.MainPage">
-        <ContentPage.Resources>
-                <drawable:ScoreDrawable x:Key="drawable"/>
-        </ContentPage.Resources>
+    <ContentPage.Resources>
+        <drawable:ScoreDrawable x:Key="score"/>
+    </ContentPage.Resources>
 
-        <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Start" HorizontalOptions="StartAndExpand">
-                <GraphicsView Drawable="{StaticResource drawable}" HeightRequest="300" WidthRequest="400"/>
-        </VerticalStackLayout>
+    <VerticalStackLayout HorizontalOptions="Start">
+        <GraphicsView Drawable="{StaticResource score}" HeightRequest="100" WidthRequest="100"/>
+    </VerticalStackLayout>
 
 </ContentPage>
