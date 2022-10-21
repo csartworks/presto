@@ -6,6 +6,8 @@ namespace presto_maui;
 public class ScoreDrawable : IDrawable
 {
     private const int FONT_SIZE = 100;
+    public const float MIDDLE_C = 0.25f;
+    public const float PITCH_SPACING_EM = 0.125f;
     public static float EM(float value) => FONT_SIZE * value;
     public static GlyphNames GlyphNames { get; private set; }
     public static BravuraMetadata Bravura { get; private set; }
@@ -18,18 +20,29 @@ public class ScoreDrawable : IDrawable
         //canvas.DrawString("\u2014", 0, 0, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Bottom);
         //canvas.DrawString("|", 0, 0, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Bottom);
 
-        canvas.StrokeSize = 3;
-        canvas.StrokeColor = Colors.White;
+        canvas.StrokeSize = 2;
+        canvas.StrokeColor = Colors.Black;
         //DrawGlyph(GlyphNames.staff5Lines.codepoint, EM(0.5f));
         //canvas.DrawLine(0, 0, EM(0.5f), 0);
         //canvas.DrawLine(0, 0, EM(0.5f), 0);
         DrawStaves(EM(10));
 
-        canvas.FontColor = Colors.White;
+        canvas.FontColor = Colors.Black;
         //float gclefOffset = EM(Bravura.glyphAdvanceWidths.gClef / 2);
         float gclefOffset = EM(-2.684f / 2 + 2);
         canvas.DrawString(GetGlyph(GlyphNames.gClef.codepoint), 0, gclefOffset, 500, 500, HorizontalAlignment.Left, VerticalAlignment.Top);
-        canvas.DrawString(GetGlyph(GlyphNames.noteheadBlack.codepoint), EM(1), EM(-1.25f), 500, 500, HorizontalAlignment.Left, VerticalAlignment.Top);
+        //canvas.DrawString(GetGlyph(GlyphNames.noteheadBlack.codepoint), EM(1), EM(-1.25f), 500, 500, HorizontalAlignment.Left, VerticalAlignment.Top);
+        NoteAt(1);
+        NoteAt(3);
+        NoteAt(6);
+
+
+        //gclef e = 0em. 1pitch = 0.125em, middle g = -0.25em
+        void NoteAt(int pitch, int octave = 4)
+        {
+            float position = MIDDLE_C - pitch * PITCH_SPACING_EM;
+            canvas.DrawString(GetGlyph(GlyphNames.noteheadBlack.codepoint), EM(1), EM(position), 500, 500, HorizontalAlignment.Left, VerticalAlignment.Bottom);
+        }
 
         void DrawStaves(float length, int lines = 5)
         {
